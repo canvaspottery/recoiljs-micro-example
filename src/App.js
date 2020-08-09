@@ -7,11 +7,28 @@ import {
   useSetRecoilState,
 } from "recoil";
 
+// State
 const todoListState = atom({
   key: "todoListState",
   default: [],
 });
 
+// util
+
+let id = 0;
+function getId() {
+  return id++;
+}
+
+function replaceItemAtIndex(arr, index, newValue) {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+}
+
+function removeItemAtIndex(arr, index) {
+  return [...arr.slice(0, index), ...arr.slice(index + 1)];
+}
+
+// Components
 function TodoItemCreator() {
   const [inputValue, setInputValue] = useState("");
   const setTodoList = useSetRecoilState(todoListState);
@@ -38,11 +55,6 @@ function TodoItemCreator() {
       <button onClick={addItem}>Add</button>
     </div>
   );
-}
-
-let id = 0;
-function getId() {
-  return id++;
 }
 
 function TodoItem({ item }) {
@@ -84,14 +96,6 @@ function TodoItem({ item }) {
       <button onClick={deleteItem}>X</button>
     </div>
   );
-}
-
-function replaceItemAtIndex(arr, index, newValue) {
-  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
-}
-
-function removeItemAtIndex(arr, index) {
-  return [...arr.slice(0, index), ...arr.slice(index + 1)];
 }
 
 function TodoList() {
